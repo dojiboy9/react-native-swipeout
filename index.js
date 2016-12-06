@@ -158,8 +158,11 @@ export default class Swipeout extends Component {
 		let posY = gestureState.dy;
 		let leftWidth = this.state.btnsLeftWidth;
 		let rightWidth = this.state.btnsRightWidth;
-		if (this.state.openedRight) let posX = gestureState.dx - rightWidth;
-		else if (this.state.openedLeft) let posX = gestureState.dx + leftWidth;
+		if (this.state.openedRight) {
+			posX = gestureState.dx - rightWidth;
+		} else if (this.state.openedLeft) {
+			posX = gestureState.dx + leftWidth;
+		}
 
 		//  prevent scroll if moveX is true
 		let moveX = Math.abs(posX) > Math.abs(posY);
@@ -189,14 +192,18 @@ export default class Swipeout extends Component {
 		let openRight = posX < -openX || posX < -btnsRightWidth / 2;
 
 		//  account for open swipeouts
-		if (this.state.openedRight) let openRight = posX - openX < -openX;
-		if (this.state.openedLeft) let openLeft = posX + openX > openX;
+		if (this.state.openedRight) {
+			openRight = posX - openX < -openX;
+		}
+		if (this.state.openedLeft) {
+			openLeft = posX + openX > openX;
+		}
 
 		//  reveal swipeout on quick swipe
 		let timeDiff = (new Date()).getTime() - this.state.timeStart < 200;
 		if (timeDiff) {
-			let openRight = posX < -openX / 10 && !this.state.openedLeft;
-			let openLeft = posX > openX / 10 && !this.state.openedRight;
+			openRight = posX < -openX / 10 && !this.state.openedLeft;
+			openLeft = posX > openX / 10 && !this.state.openedRight;
 		}
 
 		if (this.state.swiping) {
