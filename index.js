@@ -118,6 +118,8 @@ export default class Swipeout extends Component {
 		};
 
 		this._contentPos = new Animated.Value(0);
+
+		this._onLayout = this._onLayout.bind(this);
 	}
 
 	componentWillMount() {
