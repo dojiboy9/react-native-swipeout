@@ -105,7 +105,7 @@ export default class Swipeout extends Component {
 		super(props);
 
 		this.state = {
-			autoClose: this.props.autoClose || false,
+			autoClose: props.autoClose || false,
 			btnWidth: 0,
 			btnsLeftWidth: 0,
 			btnsRightWidth: 0,
@@ -123,6 +123,7 @@ export default class Swipeout extends Component {
 		this._handlePanResponderGrant = this._handlePanResponderGrant.bind(this);
 		this._handlePanResponderMove = this._handlePanResponderMove.bind(this);
 		this._handlePanResponderEnd = this._handlePanResponderEnd.bind(this);
+		this._renderButton = this._renderButton.bind(this);
 	}
 
 	componentWillMount() {
@@ -287,9 +288,11 @@ export default class Swipeout extends Component {
 
 	_renderButtons(buttons, isVisible, style) {
 		if (buttons && isVisible) {
-			return ( <View style={style}>
-				{ buttons.map(this._renderButton) }
-			</View>);
+			return (
+				<View style={style}>
+					{ buttons.map(this._renderButton) }
+				</View>
+			);
 		} else {
 			return (
 				<View/>
