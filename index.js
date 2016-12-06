@@ -120,6 +120,9 @@ export default class Swipeout extends Component {
 		this._contentPos = new Animated.Value(0);
 
 		this._onLayout = this._onLayout.bind(this);
+		this._handlePanResponderGrant = this._handlePanResponderGrant.bind(this);
+		this._handlePanResponderMove = this._handlePanResponderMove.bind(this);
+		this._handlePanResponderEnd = this._handlePanResponderEnd.bind(this);
 	}
 
 	componentWillMount() {
