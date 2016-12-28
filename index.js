@@ -169,11 +169,17 @@ export default class Swipeout extends Component {
 			posX = gestureState.dx + leftWidth;
 		}
 
-		//  prevent scroll if moveX is true
-		let moveX = Math.abs(posX) > Math.abs(posY);
 		if (this.props.scroll) {
-			if (moveX) this.props.scroll(false);
-			else this.props.scroll(true);
+			//  prevent scroll if moveX is true
+			let moveX = Math.abs(posX) > Math.abs(posY);
+			if(moveX !== this._scrollEnabled) {
+				this._scrollEnabled = moveX;
+				if (moveX) {
+					this.props.scroll(false);
+				} else {
+					this.props.scroll(true);
+				}
+			}
 		}
 
 		if (this.state.swiping) {
