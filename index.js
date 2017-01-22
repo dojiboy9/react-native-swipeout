@@ -92,7 +92,7 @@ export default class Swipeout extends Component {
 		right: PropTypes.array,
 		scroll: PropTypes.func,
 		style: View.propTypes.style,
-		sensitivity: PropTypes.number
+		sensitivity: PropTypes.number,
 	};
 
 	static defaultProps = {
@@ -106,7 +106,6 @@ export default class Swipeout extends Component {
 
 		this.state = {
 			autoClose: props.autoClose || false,
-			btnWidth: 0,
 			btnsLeftWidth: 0,
 			btnsRightWidth: 0,
 			contentHeight: 0,
@@ -289,8 +288,8 @@ export default class Swipeout extends Component {
 				limit = this.state.btnsLeftWidth;
 			}
 		}
-		if (value < 0 && value < limit) return limit - Math.pow(limit - value, 0.85);
-		else if (value > 0 && value > limit) return limit + Math.pow(value - limit, 0.85);
+		if (value < 0 && value < limit) return limit;
+		else if (value > 0 && value > limit) return limit;
 		return value;
 	}
 
@@ -310,11 +309,20 @@ export default class Swipeout extends Component {
 
 	_onLayout(event) {
 		let {width, height} = event.nativeEvent.layout;
-		let btnWidth = (width / 5);
-		let btnsLeftWidth = this.props.left ? btnWidth * this.props.left.length : 0;
-		let btnsRightWidth = this.props.right ? btnWidth * this.props.right.length : 0;
+		let btnDefaultWidth = width / 5.0;
+
+		let btnsLeftWidth = 0;
+		for (const btn of (this.props.left || [])) {
+			btnsLeftWidth += (btn.width ? btn.width : btnDefaultWidth)
+		}
+
+		let btnsRightWidth = 0;
+		for (const btn of (this.props.right || [])) {
+			btnsRightWidth += (btn.width ? btn.width : btnDefaultWidth)
+		}
+
 		this.setState({
-			btnWidth,
+			btnDefaultWidth,
 			btnsLeftWidth,
 			btnsRightWidth,
 			endPosLeft: btnsLeftWidth,
@@ -337,7 +345,7 @@ export default class Swipeout extends Component {
 				text={btn.text}
 				type={btn.type}
 				underlayColor={btn.underlayColor}
-				width={this.state.btnWidth}/>
+				width={btn.width}/>
 		);
 	}
 
